@@ -9,6 +9,7 @@ import android.os.PowerManager.WakeLock
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,6 +41,9 @@ class FloodServiceImpl(private val context: Context) : FloodService {
 
     private var isRunning = false
 
+    private var jobPreCall: Job? = null
+    private var jobPostCall: Job? = null
+
     override fun launch(number: String, mode: FloodMode, startDelay: Int, maxDuration: Int) {
         log("Launching flood with parameters:\nPhone: $number\nMode: $mode")
 
@@ -62,6 +66,8 @@ class FloodServiceImpl(private val context: Context) : FloodService {
         log("Flood stopped.")
         isRunning = false
         wakeLock?.release()
+        jobPreCall?.cancel()
+        jobPostCall?.cancel()
     }
 
     override fun observeCount(): StateFlow<Int> {
@@ -98,7 +104,7 @@ class FloodServiceImpl(private val context: Context) : FloodService {
     private fun onCallStarted() {
         processedCount++
         log("Call was started, finishing it in 20 seconds.")
-        CoroutineScope(Dispatchers.Main).launch {
+        jobPreCall = CoroutineScope(Dispatchers.Main).launch {
             delay(maxDuration)
             finishCall()
         }
@@ -117,7 +123,7 @@ class FloodServiceImpl(private val context: Context) : FloodService {
                 FloodMode.Loop -> startCall()
             }
         }
-        CoroutineScope(Dispatchers.Main).launch {
+        jobPostCall = CoroutineScope(Dispatchers.Main).launch {
             delay(startDelay)
             action()
         }

@@ -142,7 +142,7 @@ private fun ScreenContent(
             )
             TextField(
                 modifier = rowModifier,
-                value = state.maxCallCountInput,
+                value = state.maxDurationSecondsInput,
                 onValueChange = { value ->
                     onMaxDurationChanged(value.filter { it.isDigit() })
                 },
