@@ -1,0 +1,15 @@
+ext {
+    koinVersion = '3.4.0'
+    koinComposeVersion = '3.4.2'
+
+    lifecycleComposeVersion = '2.6.0'
+
+    di = [
+            koinCore   : "io.insert-koin:koin-core:$koinVersion",
+            koinAndroid: "io.insert-koin:koin-android:$koinVersion",
+            koinCompose: "io.insert-koin:koin-androidx-compose:$koinComposeVersion",
+    ]
+    androidx = [
+            lifecycleCompose: "androidx.lifecycle:lifecycle-runtime-compose:$lifecycleComposeVersion",
+    ]
+}

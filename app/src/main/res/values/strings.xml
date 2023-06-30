@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CallFlood</string>
+    <string name="input_phone">Phone number</string>
+    <string name="input_call_count">Amount of calls</string>
+    <string name="input_delay_start">Start delay (sec)</string>
+    <string name="input_max_duration">Max duration (sec)</string>
+    <string name="mode_count">Fixed count</string>
+    <string name="mode_loop">Endless</string>
+    <string name="status_running">Flood is running</string>
+    <string name="status_not_running">Flood is not running</string>
+    <string name="calls_processed">Made %1$s flood calls</string>
+</resources>
