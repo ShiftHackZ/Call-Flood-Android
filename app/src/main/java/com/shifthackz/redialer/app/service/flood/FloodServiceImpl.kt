@@ -22,6 +22,7 @@ class FloodServiceImpl(private val context: Context) : FloodService {
         get() = context.getSystemService(Context.POWER_SERVICE) as PowerManager
 
     private val processedCountStateFlow = MutableStateFlow(0)
+    private val runningStateFlow = MutableStateFlow(false)
 
     private var wakeLock: WakeLock? = null
 
@@ -40,6 +41,10 @@ class FloodServiceImpl(private val context: Context) : FloodService {
     private var maxDuration: Long = 20_000
 
     private var isRunning = false
+        set(value) {
+            runningStateFlow.tryEmit(value)
+            field = value
+        }
 
     private var jobPreCall: Job? = null
     private var jobPostCall: Job? = null
@@ -72,6 +77,10 @@ class FloodServiceImpl(private val context: Context) : FloodService {
 
     override fun observeCount(): StateFlow<Int> {
         return processedCountStateFlow.asStateFlow()
+    }
+
+    override fun observeState(): StateFlow<Boolean> {
+        return runningStateFlow.asStateFlow()
     }
 
     private fun startCall() {
@@ -114,7 +123,7 @@ class FloodServiceImpl(private val context: Context) : FloodService {
         val action: () -> Unit = {
             if (isRunning) when (floodMode) {
                 is FloodMode.Count -> {
-                    if (processedCount <= targetCount) {
+                    if (processedCount < targetCount) {
                         startCall()
                     } else {
                         isRunning = false

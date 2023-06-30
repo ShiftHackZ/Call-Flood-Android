@@ -21,6 +21,13 @@ class DialerViewModel(
                 currentState.copy(processedCount = it).let(::setState)
             }
             .launchIn(viewModelScope)
+
+        floodService
+            .observeState()
+            .onEach {
+                currentState.copy(floodRunning = it).let(::setState)
+            }
+            .launchIn(viewModelScope)
     }
 
     fun onPhoneInputChanged(value: String) = currentState
@@ -32,7 +39,7 @@ class DialerViewModel(
         .let(::setState)
 
     fun onMaxCallsChanged(value: String) = currentState
-        .copy(maxCallCountInput = value)
+        .copy(maxCallCountInput = value, mode = FloodMode.Count(value.toIntOrNull() ?: 1))
         .let(::setState)
 
     fun onStartDelayChanged(value: String) = currentState
@@ -44,6 +51,7 @@ class DialerViewModel(
         .let(::setState)
 
     fun toggleFloodState() {
+
         if (!currentState.floodRunning) {
             floodService.launch(
                 currentState.phoneNumberInput,
@@ -53,6 +61,6 @@ class DialerViewModel(
             )
         }
         else floodService.stop()
-        currentState.copy(floodRunning = !currentState.floodRunning).let(::setState)
+//        currentState.copy(floodRunning = !currentState.floodRunning).let(::setState)
     }
 }
