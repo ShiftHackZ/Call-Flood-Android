@@ -4,7 +4,7 @@ import com.shifthackz.redialer.app.core.mvi.MviState
 import com.shifthackz.redialer.app.service.flood.FloodMode
 
 data class DialerState(
-    val phoneNumberInput: String = "+380660905564",
+    val phoneNumberInput: String = "",
     val mode: FloodMode = FloodMode.Loop,
     val maxCallCountInput: String = "100",
     val startDelaySecondsInput: String = "5",
