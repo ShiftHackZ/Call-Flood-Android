@@ -1,6 +1,6 @@
 # Call-Flood-Android
 
-[![Version](https://img.shields.io/badge/Version-0.0.1-blue)](https://github.com/ShiftHackZ/Call-Flood-Android/releases)
+[![Version](https://img.shields.io/badge/Version-0.0.2-blue)](https://github.com/ShiftHackZ/Call-Flood-Android/releases)
 
 This is the Android application that allows to perform GSM Call flood attacks, causing denial of service for particular GSM consumer (so noone is able to get through attacked number) or just to annoy the owner of atacked number.
 
