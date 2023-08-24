@@ -7,14 +7,14 @@ apply from: "$project.rootDir/gradle/dependencies.gradle"
 
 android {
     namespace 'com.shifthackz.redialer.app'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.shifthackz.redialer.app"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
